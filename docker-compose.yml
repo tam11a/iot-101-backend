@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   api:
     build:
@@ -15,6 +13,7 @@ services:
       - mqtttest
     depends_on:
       - db
+      - mqtt-broker
 
   mqtt-broker:
     image: eclipse-mosquitto
@@ -29,15 +28,17 @@ services:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
 
   db:
-    image: postgres
+    image: postgres:latest
     restart: always
     environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     container_name: iot-postgres
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
+    # volumes:
+    #   - ./pgdata:/var/lib/postgresql/data
     ports:
-      - '5433:5432'
+      - "5433:5432"
     networks:
       - mqtttest
 
