@@ -20,7 +20,6 @@ services:
     container_name: mqtt-broker
     restart: always
     ports:
-      - "1883:1883"
       - "9001:9001"
     networks:
       - mqtttest
@@ -35,10 +34,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     container_name: iot-postgres
-    # volumes:
-    #   - ./pgdata:/var/lib/postgresql/data
-    ports:
-      - "5433:5432"
+
     networks:
       - mqtttest
 
